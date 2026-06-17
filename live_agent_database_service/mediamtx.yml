@@ -1,0 +1,49 @@
+###############################################################################
+# MediaMTX configuration for Live Agent screen streaming
+# Place this file alongside the mediamtx executable on your Windows Server.
+# Run with: mediamtx.exe mediamtx.yml
+###############################################################################
+
+logLevel: info
+logDestinations: [stdout]
+
+# Optional: REST API and metrics (useful for monitoring active streams)
+api: yes
+apiAddress: :9997
+metrics: yes
+metricsAddress: :9998
+
+###############################################################################
+# RTSP — receives H.264 streams from Spring Boot (FFmpeg relay, localhost only)
+###############################################################################
+rtsp: yes
+rtspAddress: :8554
+rtspTransports: [tcp]
+
+###############################################################################
+# WebRTC — serves streams to Dashboard browsers
+# Browsers connect to:  http://<server>:8889/<deviceToken>/whep
+# Built-in player page: http://<server>:8889/
+###############################################################################
+webrtc: yes
+webrtcAddress: :8889
+webrtcLocalUDPAddress: :8889
+
+# If your server is behind NAT, add its public IP here so WebRTC ICE works:
+webrtcAdditionalHosts: [117.247.52.93]
+
+###############################################################################
+# Disabled protocols
+###############################################################################
+hls: no
+rtmp: no
+srt: no
+
+###############################################################################
+# Stream paths — accept any path name dynamically.
+# Spring Boot relay publishes to:  rtsp://localhost:8554/<deviceToken>
+# Dashboard views from:            http://<server>:8889/<deviceToken>/whep
+###############################################################################
+paths:
+  all_others:
+    record: no
