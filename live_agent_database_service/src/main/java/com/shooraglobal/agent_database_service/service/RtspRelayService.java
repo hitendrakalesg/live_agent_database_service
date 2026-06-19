@@ -147,7 +147,7 @@ public class RtspRelayService {
                     new InputStreamReader(process.getErrorStream(), StandardCharsets.UTF_8))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    log.debug("ffmpeg-relay [{}]: {}", sanitizedToken, line);
+                    log.warn("ffmpeg-relay [{}]: {}", sanitizedToken, line);
                 }
             } catch (IOException ignored) {
             }

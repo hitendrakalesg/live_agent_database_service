@@ -11,7 +11,7 @@ import org.springframework.core.env.Environment;
 import java.util.Arrays;
 
 @SpringBootApplication
-public class AgentDatabaseServiceApplication {
+public class  AgentDatabaseServiceApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(AgentDatabaseServiceApplication.class);
 

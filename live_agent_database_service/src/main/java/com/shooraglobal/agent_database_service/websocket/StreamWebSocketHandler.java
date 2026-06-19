@@ -11,6 +11,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.BinaryWebSocketHandler;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 @Component
@@ -79,6 +80,17 @@ public class StreamWebSocketHandler extends BinaryWebSocketHandler {
         byte[] streamData = new byte[payload.remaining()];
         payload.get(streamData);
         rtspRelayService.writeStream(deviceToken, streamData);
+
+        // If the relay died during or before this write (e.g. FFmpeg crashed, MediaMTX restarted),
+        // close the WebSocket so the agent's supervisor loop reconnects and a fresh relay is started.
+        if (!rtspRelayService.isRelayActive(deviceToken)) {
+            log.warn("RTSP relay died for deviceToken={}; closing WebSocket to trigger agent reconnect",
+                    sanitizeForLog(deviceToken));
+            try {
+                session.close(CloseStatus.SERVER_ERROR.withReason("RTSP relay stopped"));
+            } catch (IOException ignored) {
+            }
+        }
     }
 
     @Override
