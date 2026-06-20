@@ -105,7 +105,7 @@ public class StreamWebSocketHandler extends BinaryWebSocketHandler {
             rtspRelayService.stopRelay(deviceToken);
             log.info("Agent live stream disconnected: deviceToken={}, status={}", sanitizeForLog(deviceToken), status);
         }
-    }
+    }  
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {

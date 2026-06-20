@@ -11,5 +11,7 @@ public interface DeviceRepo
 
     Optional<Device> findByCompanyNameIgnoreCaseAndDeviceTokenIgnoreCase(String companyName, String deviceToken);
 
+    Optional<Device> findByDeviceTokenIgnoreCase(String deviceToken);
+
     List<Device> findByCompanyNameIgnoreCaseOrderByUserNameAscHostnameAsc(String companyName);
 }
